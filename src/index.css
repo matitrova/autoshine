@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --color-carbon: #0a0a0b;
+  --color-carbon-2: #131316;
+  --color-linea: #26262c;
+  --color-oro: #f2b705;
+  --color-oro-claro: #ffd45e;
+  --color-hueso: #edeae3;
+  --color-ceniza: #8f8c85;
+  --color-led: #f4f7ff;
+  --color-wa: #25d366;
+}
+
+html {
+  background: var(--color-carbon);
+  color: var(--color-hueso);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-oro);
+  color: var(--color-carbon);
+}
+
+/* Títulos: Archivo ensanchada, como las letras de un frente de taller */
+.titulo {
+  font-stretch: 125%;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+
+.etiqueta {
+  font-stretch: 112%;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-oro);
+}
+
+/* Dorado con reflejo, como el escudo */
+.oro {
+  background: linear-gradient(100deg, #fff6d5 0%, var(--color-oro-claro) 30%, var(--color-oro) 60%, #a47a04 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---------- El techo de luces hexagonales ---------- */
+.hex-base {
+  fill: none;
+  stroke: rgb(235 242 255 / 0.1);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.hex-brillo {
+  fill: none;
+  stroke: var(--color-led);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgb(200 220 255 / 0.9));
+}
+
+/* La capa brillante solo se ve donde pasa la "luz": una máscara que barre el panal */
+.hex-luz {
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, rgb(0 0 0 / 0.35) 55%, transparent 100%);
+  -webkit-mask-size: 75% 140%;
+  mask-size: 75% 140%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: barrido 11s ease-in-out infinite alternate;
+}
+
+@keyframes barrido {
+  from { -webkit-mask-position: -60% 30%; mask-position: -60% 30%; }
+  to { -webkit-mask-position: 160% 70%; mask-position: 160% 70%; }
+}
+
+/* Barra de progreso del servicio activo */
+@keyframes llenar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hex-luz {
+    animation: none;
+    -webkit-mask-position: 50% 50%;
+    mask-position: 50% 50%;
+  }
+}
